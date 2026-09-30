@@ -1,0 +1,13 @@
+{
+  "run_id": "REPLACE_WITH_CURRENT_RUN_ID",
+  "message_id": "REPLACE_WITH_CURRENT_MESSAGE_ID",
+  "destination_role": "worker",
+  "pane_id": "REPLACE_WITH_CURRENT_PANE_ID",
+  "session_ref": null,
+  "expected_native_session_id": "REPLACE_WITH_THIS_ROLE_NATIVE_SESSION_UUID",
+  "body_sha256": "REPLACE_WITH_EXACT_TASK_HEADER_BODY_SHA256",
+  "phase": "received",
+  "summary": "REPLACE_WITH_THE_ROLE_ACTUAL_RECEIPT",
+  "artifacts": [],
+  "pending_tools_or_approvals": []
+}

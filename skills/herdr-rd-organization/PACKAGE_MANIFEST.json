@@ -1,0 +1,143 @@
+{
+  "name": "herdr-rd-organization",
+  "version": "1.0.1",
+  "created_utc": "2026-09-30T14:53:49.693050+00:00",
+  "files": [
+    {
+      "path": "agents/openai.yaml",
+      "sha256": "707628341b1d6b039bc39569e54e14b54cd93501abd27ec77c047d39a029a9e6",
+      "bytes": 276
+    },
+    {
+      "path": "assets/templates/config.example.json",
+      "sha256": "e07e08700040d5a25f3a1157860f143e44cf332ef85a7b509da18bacea2e1f05",
+      "bytes": 1553
+    },
+    {
+      "path": "assets/templates/experience.example.json",
+      "sha256": "8b05dbb3c25ca86bd373db04974cfcbcdfe47aedf6f0cea24eca43ec4a422922",
+      "bytes": 984
+    },
+    {
+      "path": "assets/templates/orchestrator-task.example.json",
+      "sha256": "1e9a2034d8cbc0edf06d97a9d5f28aab0ed4db3be488b90736931affa8a292a5",
+      "bytes": 3222
+    },
+    {
+      "path": "assets/templates/receipt.example.json",
+      "sha256": "e1441f63d3bad4c4f9e2ab0e44c0d6098ea0550409955cf5dc6a6f15dd89e9ac",
+      "bytes": 469
+    },
+    {
+      "path": "assets/templates/research-task.example.json",
+      "sha256": "08bb3f55fcff7dc8a94587121065fb1f8910c97b801b60ac37609e66efd16ccc",
+      "bytes": 2283
+    },
+    {
+      "path": "assets/templates/result.example.json",
+      "sha256": "32e9510b032bec6086051c77f57fe381b887ff3024475b6e470d1a188f6b304d",
+      "bytes": 724
+    },
+    {
+      "path": "assets/templates/roles/curator.md",
+      "sha256": "46f79dd21138bacc968dc021905df81a3572e42ef3b64a72ac7897776e8ad591",
+      "bytes": 988
+    },
+    {
+      "path": "assets/templates/roles/orchestrator.md",
+      "sha256": "2d8772a1b09c5980aa9a7bbe90014e3c34fc8dd3558810d7a21c71a165ce3648",
+      "bytes": 1353
+    },
+    {
+      "path": "assets/templates/roles/qa.md",
+      "sha256": "a2d1e27432caf890211f23ac278556badf38e601b85da08ae8fd1a5bbdc634c1",
+      "bytes": 845
+    },
+    {
+      "path": "assets/templates/roles/research-engineer.md",
+      "sha256": "c3b5c70933ad57ed645b26fbc93371c53b50444c4237f4daebab1b85ffb98301",
+      "bytes": 943
+    },
+    {
+      "path": "assets/templates/roles/worker.md",
+      "sha256": "d26ee98b9aa7ab25d2f12d7828cc04a250bccc01f9510c21486018073e7c1e74",
+      "bytes": 856
+    },
+    {
+      "path": "assets/templates/task.example.json",
+      "sha256": "9f34a05feb46386d258bbc613cb662fe8cbef9025d871548fb9e47b336f6ae14",
+      "bytes": 1685
+    },
+    {
+      "path": "references/organization.md",
+      "sha256": "d79b3e17ea91d4c6cf2b72e293a260c7c30ab68a9f59cfb793d16b133ffbb274",
+      "bytes": 4491
+    },
+    {
+      "path": "references/overview.md",
+      "sha256": "c2d8aa6adb72b4f08d9d4246978c6de49ab6975230a5b3ff008626e21df2ff0d",
+      "bytes": 3276
+    },
+    {
+      "path": "references/portability.md",
+      "sha256": "fdf2055c3fb29dad38d388ebe41361103d70a6d5867a89804cc95b077d929a0c",
+      "bytes": 5320
+    },
+    {
+      "path": "references/quickstart.md",
+      "sha256": "881aa9a277e7d3dd818f3c80a1e5229a7e992f2441ebe2b5ed5ea98ad44d2718",
+      "bytes": 11721
+    },
+    {
+      "path": "scripts/fixtures/test_herdr_lab.py",
+      "sha256": "173989498e82726d0e9acc6f41400ddd9f91a762d984272e90b665ce27f5471d",
+      "bytes": 14296
+    },
+    {
+      "path": "scripts/fixtures/test_init_project.py",
+      "sha256": "11228109dce1488aca15d57599061bdda064ef29dc4cfaf551ef915abe946e92",
+      "bytes": 16926
+    },
+    {
+      "path": "scripts/fixtures/test_message_archive.py",
+      "sha256": "d991c7da023437374688700f6a8c451a140b63bc10248d2c3419fb063caec4f2",
+      "bytes": 2962
+    },
+    {
+      "path": "scripts/init_project.py",
+      "sha256": "07936015551fb9b6d1e62025739dbf74aada7ea932082acfe5c1312950a120d6",
+      "bytes": 12269
+    },
+    {
+      "path": "scripts/runtime/herdr_lab.py",
+      "sha256": "1c8f36f974d7e07b3b578d045f513a60e4413ba4c79eaaa21af2d79fcbbaf62a",
+      "bytes": 36125
+    },
+    {
+      "path": "SKILL.md",
+      "sha256": "1578c60cc216537f51f7c118f4c39591257ff890634df0f627bfcbecd671c0e3",
+      "bytes": 7159
+    }
+  ],
+  "baseline_starter_name": "herdr-project-starter-20260930.zip",
+  "baseline_starter_sha256": "8eed588da3f968245cadcf07f0d7fce4bbfe064ed101e41fcb71f168f934983a",
+  "tested_dependencies": {
+    "python": "3.14.2",
+    "herdr": "0.9.1",
+    "protocol": 22,
+    "grok_build_cli": "1.0.44",
+    "codex_cli": "0.159.2"
+  },
+  "adapter": "Windows/Grok",
+  "original_runtime_modified": true,
+  "modifications": [
+    "remove inherited directory-name proxy restriction",
+    "propagate current authority boundaries",
+    "archive rendered role/prompt with hashes in per-message directories",
+    "reject filesystem-equivalent message IDs"
+  ],
+  "runtime_state_included": false,
+  "credentials_included": false,
+  "third_party_binaries_included": false,
+  "license": "Original resources: no public source license selected. Third-party dependencies installed separately."
+}

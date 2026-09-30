@@ -1,0 +1,42 @@
+{
+  "artifact_type": "initial_research_task_template",
+  "task_id": "demo-research-001",
+  "run_id": "demo-run-001",
+  "assigned_role": "research",
+  "report_to": "orchestrator",
+  "goal_contract": {
+    "version": "goal-v1",
+    "status": "draft",
+    "user_decision_ref": null,
+    "objective": "REPLACE_WITH_USER_CONFIRMED_PROJECT_OBJECTIVE",
+    "acceptance": [
+      {
+        "id": "acceptance-001",
+        "observable_condition": "REPLACE_WITH_USER_CONFIRMED_PASS_CONDITION",
+        "verification": "REPLACE_WITH_INDEPENDENT_CHECK",
+        "required_evidence": "REPLACE_WITH_REQUIRED_EVIDENCE"
+      }
+    ]
+  },
+  "execution_contract": {
+    "authorization_status": "pending",
+    "authorization_ref": null,
+    "project_root": "C:/Projects/demo",
+    "approved_inputs": ["REPLACE_WITH_APPROVED_PROJECT_RULES_AND_INPUT_PATHS"],
+    "write_roots": ["C:/Projects/demo/sandbox", "C:/Projects/demo/.herdr-lab/runs/demo-run-001/agent-evidence"],
+    "allowed_operations": ["read_approved_input", "write_research_plan", "invoke_task_header_receipt_argv"],
+    "excluded": ["implementation", "independent_qa_execution", "hidden_answers", "private_memory", "global_config", "global_skill_install", "publish"],
+    "network_destinations": [],
+    "budget": {"max_attempts": 1, "deadline": "REPLACE_WITH_UTC_DEADLINE"},
+    "enforcement": "role_contract_and_qa_audit_only"
+  },
+  "assignment": {
+    "action": "Design one bounded, reproducible method for the frozen project objective. Write a research plan; do not begin implementation.",
+    "output_file": "C:/Projects/demo/sandbox/research-plan.json",
+    "required_plan_fields": ["goal_version", "method_version", "hypothesis", "approved_inputs", "implementation_steps", "independent_qa_checks", "failure_conditions", "budget", "rollback", "unknowns"],
+    "method_may_change": true,
+    "goal_acceptance_or_authorization_may_change": false,
+    "completion": "Write received and started receipts before the assigned work, then completed or failed using the exact TASK HEADER identity and receipt argv. Completed must cite the real plan artifact and its SHA256.",
+    "handoff": "Report the plan path and limitations for an explicit Orchestrator intake task. Do not assume an idle Orchestrator already received the plan."
+  }
+}

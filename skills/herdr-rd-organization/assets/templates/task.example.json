@@ -1,0 +1,48 @@
+{
+  "artifact_type": "task_contract_template",
+  "task_id": "demo-task-001",
+  "run_id": "demo-run-001",
+  "assigned_role": "worker",
+  "report_to": "orchestrator",
+  "goal_contract": {
+    "version": "goal-v1",
+    "status": "draft",
+    "user_decision_ref": null,
+    "objective": "REPLACE_WITH_USER_CONFIRMED_OBJECTIVE",
+    "acceptance": [
+      {
+        "id": "acceptance-001",
+        "observable_condition": "REPLACE_WITH_OBSERVABLE_PASS_CONDITION",
+        "verification": "REPLACE_WITH_INDEPENDENT_CHECK",
+        "required_evidence": "REPLACE_WITH_OUTPUT_OR_RESULT_REFERENCE"
+      }
+    ]
+  },
+  "method": {
+    "version": "method-v1",
+    "research_may_adjust_method": true,
+    "research_may_change_goal_or_acceptance": false,
+    "hypothesis": "REPLACE_WITH_TESTABLE_HYPOTHESIS",
+    "failure_condition": "REPLACE_WITH_FAILURE_CONDITION"
+  },
+  "execution_contract": {
+    "authorization_status": "pending",
+    "authorization_ref": null,
+    "project_root": "C:/Projects/demo",
+    "read_roots": ["C:/Projects/demo"],
+    "write_roots": ["C:/Projects/demo/sandbox"],
+    "allowed_operations": ["read_file", "write_file", "run_registered_test"],
+    "excluded": ["secrets", "hidden_answers", "global_config", "global_skill_install", "publish"],
+    "network_destinations": [],
+    "budget": {
+      "max_attempts": 2,
+      "deadline": "REPLACE_WITH_UTC_DEADLINE"
+    },
+    "enforcement": "role_contract_and_qa_audit_only"
+  },
+  "deliverables": ["REPLACE_WITH_DELIVERABLE_PATH_OR_REFERENCE"],
+  "independent_qa_required": true,
+  "method_versions": [],
+  "rollback": "REPLACE_WITH_SPECIFIC_REVERSIBLE_ROLLBACK",
+  "reopen_condition": "REPLACE_WITH_REOPEN_CONDITION"
+}

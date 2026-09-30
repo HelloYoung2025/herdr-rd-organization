@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "project_root": "C:/Projects/demo",
+  "state_dir": "C:/Projects/demo/.herdr-lab",
+  "session": "REPLACE_WITH_LOCAL_SESSION_NAME",
+  "workspace_id": "REPLACE_WITH_LOCAL_WORKSPACE_ID",
+  "herdr_executable": "herdr",
+  "tab_label": "Herdr Lab Demo",
+  "roles": {
+    "research": {
+      "provider": "grok",
+      "model": "REPLACE_WITH_AVAILABLE_GROK_MODEL",
+      "effort": "medium",
+      "template_file": "C:/Tools/herdr-lab/templates/roles/research-engineer.md",
+      "temporary": false,
+      "session_args": []
+    },
+    "orchestrator": {
+      "provider": "grok",
+      "model": "REPLACE_WITH_AVAILABLE_GROK_MODEL",
+      "effort": "medium",
+      "template_file": "C:/Tools/herdr-lab/templates/roles/orchestrator.md",
+      "temporary": false,
+      "session_args": []
+    },
+    "worker": {
+      "provider": "grok",
+      "model": "REPLACE_WITH_AVAILABLE_GROK_MODEL",
+      "effort": "medium",
+      "template_file": "C:/Tools/herdr-lab/templates/roles/worker.md",
+      "temporary": true,
+      "session_args": []
+    },
+    "qa": {
+      "provider": "grok",
+      "model": "REPLACE_WITH_AVAILABLE_GROK_MODEL",
+      "effort": "medium",
+      "template_file": "C:/Tools/herdr-lab/templates/roles/qa.md",
+      "temporary": true,
+      "session_args": []
+    },
+    "curator": {
+      "provider": "grok",
+      "model": "REPLACE_WITH_AVAILABLE_GROK_MODEL",
+      "effort": "medium",
+      "template_file": "C:/Tools/herdr-lab/templates/roles/curator.md",
+      "temporary": true,
+      "session_args": []
+    }
+  }
+}

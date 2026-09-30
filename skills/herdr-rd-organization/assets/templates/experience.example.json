@@ -1,0 +1,32 @@
+{
+  "artifact_type": "experience_candidate_template",
+  "candidate_id": "method-demo-001",
+  "version": "candidate-v1",
+  "state": "draft",
+  "kind": "ordinary_project_method",
+  "project_scope": "REPLACE_WITH_PROJECT_ID",
+  "source_task_ids": [],
+  "source_evidence_refs": [],
+  "claim": "REPLACE_WITH_CONDITIONAL_CLAIM",
+  "applicable_conditions": [],
+  "preconditions": [],
+  "inapplicable_conditions": [],
+  "counterexamples": [],
+  "independent_validation_ref": null,
+  "trial_authorization_ref": null,
+  "trial_task_ids": [],
+  "effect_metrics": {
+    "quality": null,
+    "repeated_defects": null,
+    "human_interventions": null,
+    "coordination_calls": null,
+    "recovery_result": null
+  },
+  "rollback": {
+    "trigger": "REPLACE_WITH_WITHDRAWAL_TRIGGER",
+    "previous_version": null,
+    "action": "Stop using this candidate; retain evidence; revert to a verified version or remain stopped."
+  },
+  "grant_expansion_allowed": false,
+  "global_install_allowed": false
+}

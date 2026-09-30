@@ -1,0 +1,22 @@
+{
+  "artifact_type": "role_result_template",
+  "task_id": "demo-task-001",
+  "run_id": "demo-run-001",
+  "message_id": "demo-message-001",
+  "role": "worker",
+  "status": "incomplete",
+  "goal_version": "goal-v1",
+  "method_version": "method-v1",
+  "implementation_version": "REPLACE_WITH_EXACT_VERSION_OR_HASH",
+  "actual_provider": "REPLACE_WITH_OBSERVED_PROVIDER",
+  "actual_model": "REPLACE_WITH_OBSERVED_MODEL",
+  "actual_effort": "REPLACE_WITH_OBSERVED_EFFORT",
+  "commands": [],
+  "deliverables": [],
+  "evidence_refs": [],
+  "failed_checks": [],
+  "skipped_checks": [],
+  "known_gaps": ["TEMPLATE_NOT_AN_EXECUTION_RESULT"],
+  "pending_tools_or_approvals": [],
+  "summary": "REPLACE_WITH_FACTUAL_RESULT_AND_LIMITS"
+}

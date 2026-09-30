@@ -1,0 +1,38 @@
+{
+  "artifact_type": "orchestrator_intake_task_template",
+  "task_id": "demo-orchestration-001",
+  "run_id": "demo-run-001",
+  "assigned_role": "orchestrator",
+  "goal_contract_file": "C:/Projects/demo/.herdr-lab-input/research-task.json",
+  "research_plan_file": "C:/Projects/demo/sandbox/research-plan.json",
+  "research_completed_receipt_file": "REPLACE_WITH_ACTUAL_RESEARCH_COMPLETED_RECEIPT_PATH",
+  "wrapper_argv_prefix": ["python", "C:/Tools/herdr-lab/runtime/herdr_lab.py", "--config", "C:/Projects/demo/.herdr-lab-config.json"],
+  "execution_contract": {
+    "authorization_status": "pending",
+    "authorization_ref": null,
+    "project_root": "C:/Projects/demo",
+    "approved_inputs": ["REPLACE_WITH_APPROVED_PROJECT_RULES_INPUTS_AND_RESEARCH_PLAN"],
+    "write_roots": ["C:/Projects/demo/sandbox", "C:/Projects/demo/.herdr-lab-input", "C:/Projects/demo/.herdr-lab/runs/demo-run-001/agent-evidence"],
+    "allowed_operations": ["read_approved_input", "write_bounded_task_body", "invoke_wrapper_send", "invoke_task_header_receipt_argv", "write_evidence_based_summary"],
+    "excluded": ["implementation", "author_independent_qa_result", "hidden_answers", "private_memory", "global_config", "global_skill_install", "publish", "approval_without_operation_review"],
+    "network_destinations": [],
+    "budget": {"max_repair_cycles": 1, "deadline": "REPLACE_WITH_UTC_DEADLINE"},
+    "enforcement": "role_contract_and_qa_audit_only"
+  },
+  "workflow": [
+    "Use the current run roles and actual RUN ROLE BINDINGS. Missing or inconsistent identity is a gap; do not guess or take over older panes.",
+    "Check the frozen goal, authorized scope and Research plan. Create a Worker body-file containing the exact method version, project rules, approved inputs, allowed writes, rollback, deliverables and receipt contract.",
+    "Dispatch Worker with wrapper send, a fresh message ID and that body-file. Wait for the role's real terminal receipt and artifacts; submission success is insufficient.",
+    "Create a QA body-file with the frozen acceptance, exact artifact version, approved evidence and no hidden answers or private memory. Dispatch QA independently with wrapper send.",
+    "For a defect, preserve QA evidence, route a bounded Worker repair and a separate QA retest. Do not edit either role's findings.",
+    "Send a Research feedback body-file containing real Worker/QA evidence, failures, costs and unknowns. Research may revise method within the frozen contract.",
+    "After an actual cycle, send Curator only an approved evidence pack for a project method candidate. Check sources and independent validation before any limited trial; preserve counterexamples and rollback.",
+    "Write an evidence-based summary. Complete your own receipt only when the assigned cycle has a real outcome; report failed or pending work truthfully."
+  ],
+  "summary_file": "C:/Projects/demo/sandbox/orchestrator-summary.json",
+  "lifecycle": {
+    "main_roles": "preserve research and orchestrator",
+    "temporary_role_cleanup": "only after actual terminal receipts, no observed pending tools or approvals, final capture and explicit current run authorization",
+    "global_pause_or_hard_isolation_claim": false
+  }
+}

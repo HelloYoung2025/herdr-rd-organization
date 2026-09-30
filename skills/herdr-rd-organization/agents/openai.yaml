@@ -1,0 +1,4 @@
+interface:
+  display_name: "Herdr R&D Organization"
+  short_description: "Run a reusable Herdr research and engineering workflow"
+  default_prompt: "Use $herdr-rd-organization to configure this project and run a bounded research, implementation, and independent QA loop."
