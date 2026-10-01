@@ -1,7 +1,7 @@
 {
   "name": "herdr-rd-organization",
-  "version": "1.0.1",
-  "created_utc": "2026-09-30T14:53:49.693050+00:00",
+  "version": "1.0.2",
+  "created_utc": "2026-10-01T03:14:54.704641+00:00",
   "files": [
     {
       "path": "agents/openai.yaml",
@@ -85,13 +85,13 @@
     },
     {
       "path": "references/quickstart.md",
-      "sha256": "881aa9a277e7d3dd818f3c80a1e5229a7e992f2441ebe2b5ed5ea98ad44d2718",
-      "bytes": 11721
+      "sha256": "d2508689e70b18cbba0e6a918a482848438cea9f836598846ea33dc57c77fba6",
+      "bytes": 12794
     },
     {
       "path": "scripts/fixtures/test_herdr_lab.py",
-      "sha256": "173989498e82726d0e9acc6f41400ddd9f91a762d984272e90b665ce27f5471d",
-      "bytes": 14296
+      "sha256": "c4ff096c10c719b49628823e08e905bed3320753acfcb2965db877dbbe5b71be",
+      "bytes": 17825
     },
     {
       "path": "scripts/fixtures/test_init_project.py",
@@ -110,13 +110,13 @@
     },
     {
       "path": "scripts/runtime/herdr_lab.py",
-      "sha256": "1c8f36f974d7e07b3b578d045f513a60e4413ba4c79eaaa21af2d79fcbbaf62a",
-      "bytes": 36125
+      "sha256": "164cb206a325c4401276c83d90a6d778c40c78b19e5e8a3a0b283cee3d753d5d",
+      "bytes": 37511
     },
     {
       "path": "SKILL.md",
-      "sha256": "1578c60cc216537f51f7c118f4c39591257ff890634df0f627bfcbecd671c0e3",
-      "bytes": 7159
+      "sha256": "ee49812f8f3cbff9fb5bd91d820d30ca9b5ddef651eae6708f24bcc32e2f9ea0",
+      "bytes": 7315
     }
   ],
   "baseline_starter_name": "herdr-project-starter-20260930.zip",
@@ -134,7 +134,9 @@
     "remove inherited directory-name proxy restriction",
     "propagate current authority boundaries",
     "archive rendered role/prompt with hashes in per-message directories",
-    "reject filesystem-equivalent message IDs"
+    "reject filesystem-equivalent message IDs",
+    "set visible role pane labels separately from internal agent names",
+    "verify pane and tab identity plus label before and after agent startup"
   ],
   "runtime_state_included": false,
   "credentials_included": false,

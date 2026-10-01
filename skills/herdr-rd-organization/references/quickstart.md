@@ -53,6 +53,10 @@ python -B "$skillRoot/scripts/runtime/herdr_lab.py" --config $labConfig status -
 
 preflight 读取配置, Herdr 版本/snapshot; plan 只输出计划, 两者不写运行 state 或操作 pane。start 创建本 run 的新角色并记录身份, 不接管原窗口, 不自动派科研任务。每个新 Grok 角色有明确 native UUID; send 用新鲜 API 核对, 缺失, 陈旧或不一致即拒绝派工。
 
+start 为每个新 pane 设置固定角色标题, 例如 Research Engineer | 1234abcd、Engineering Orchestrator | 1234abcd、Worker | 1234abcd、Independent QA | 1234abcd 和 Skills Curator | 1234abcd。后缀是 run_id 的最后 8 个字符。Agent 的内部 name 与 pane 的显示 label 是独立字段: 程序在启动 Agent 前调用 pane rename, 并通过 pane get 核对 pane_id、tab_id 和 label; 启动后再次检查标题是否保留。命名失败或实际标题不匹配时保留本 run 的已创建窗口与记录, 返回 creation_uncertain, 不继续创建其他角色。不要盲目重跑 start。
+
+已有窗口不会因更新 Skill 自动改名。仅在已授权且确认所属运行与角色后, 使用实际 session 和 pane_id 补名, 例如 herdr --session <session> pane rename <pane_id> "Worker | <run-suffix>", 再用 pane get 核对 label。不要按侧栏位置或终端自身动态 title 猜测角色。标题只供人识别, 不能代替 pane/tab/native session 身份验证。Herdr CLI 文档: https://herdr.dev/docs/cli-reference/#panes。
+
 角色模板只允许 send 自动填 project_root, state_dir 和 run_id。初始化已填其他基础变量; 若自行修改后仍有双花括号业务变量, 必须先填完整, 否则派工拒绝。
 
 ## 先派 Research, 再激活 Orchestrator

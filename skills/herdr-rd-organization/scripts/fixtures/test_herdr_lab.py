@@ -22,6 +22,8 @@ class FakeHerdr:
         self.fail_prompt = False
         self.prompt_calls = 0
         self.close_calls = 0
+        self.rename_behavior = "apply"
+        self.drop_label_on_start = False
 
     def raw(self, args, session=True):
         self.calls.append(list(args))
@@ -44,8 +46,23 @@ class FakeHerdr:
                     "terminal_id": f"terminal-{self.next_id}", "agent_status": "idle", "agent_session": None}
             self.panes[pane["pane_id"]] = pane
             return {"tab": {"tab_id": "w1:t9"}, "root_pane": copy.deepcopy(pane), "pane": copy.deepcopy(pane)}
+        if args[:2] == ["pane", "rename"]:
+            if self.rename_behavior == "error":
+                raise OSError("Pane rename failed")
+            if self.rename_behavior != "ignore":
+                self.panes[args[2]]["label"] = args[3]
+            return {"type": "pane_renamed"}
+        if args[:2] == ["pane", "get"]:
+            pane = copy.deepcopy(self.panes[args[2]])
+            if self.rename_behavior == "wrong-pane":
+                pane["pane_id"] = "w1:unrelated"
+            elif self.rename_behavior == "wrong-tab":
+                pane["tab_id"] = "w1:unrelated-tab"
+            return {"pane": pane}
         if args[:2] == ["agent", "start"]:
             pane = self.panes[args[args.index("--pane") + 1]]
+            if self.drop_label_on_start:
+                pane.pop("label", None)
             pane["name"] = args[2]
             pane["agent"] = "grok"
             pane["agent_session"] = {"kind": "id", "value": args[args.index("--session-id") + 1],
@@ -107,6 +124,50 @@ class AdapterTests(unittest.TestCase):
     def complete(self):
         for phase in ("received", "started", "completed"):
             self.lab.receipt("fixture-run", "task-one", phase, self.evidence(phase))
+
+    def test_all_roles_have_visible_titles_distinct_from_agent_names(self):
+        result = self.lab.start("visible-title-run")
+        titles = {"research": "Research Engineer", "orchestrator": "Engineering Orchestrator",
+                  "worker": "Worker", "qa": "Independent QA", "curator": "Skills Curator"}
+        for role, binding in result["roles"].items():
+            pane = self.fake.panes[binding["pane_id"]]
+            self.assertEqual(pane.get("label"), titles[role] + " | itle-run")
+            self.assertEqual(binding.get("pane_label"), pane["label"])
+            self.assertTrue(binding.get("pane_label_confirmed"))
+            self.assertNotEqual(pane["label"], pane["name"])
+
+    def test_run_titles_differ_and_unrelated_panes_keep_their_labels(self):
+        self.fake.panes["w1:other"] = {"pane_id": "w1:other", "tab_id": "w1:other-tab",
+                                       "label": "User's existing pane"}
+        original = copy.deepcopy(self.fake.panes["w1:other"])
+        first = self.lab.load("fixture-run")["roles"]["worker"]
+        second = self.lab.start("other-run", "worker")["roles"]["worker"]
+        self.assertNotEqual(self.fake.panes[first["pane_id"]].get("label"),
+                            self.fake.panes[second["pane_id"]].get("label"))
+        self.assertEqual(self.fake.panes["w1:other"], original)
+
+    def test_missing_or_failed_title_prevents_starting_the_agent(self):
+        for behavior in ("ignore", "error", "wrong-pane", "wrong-tab"):
+            with self.subTest(behavior=behavior):
+                self.fake.rename_behavior = behavior
+                run_id = "rename-" + behavior
+                before = sum(c[:2] == ["agent", "start"] for c in self.fake.calls)
+                with self.assertRaises((lab_module.LabError, OSError)):
+                    self.lab.start(run_id, "worker,qa")
+                result = self.lab.load(run_id)
+                self.assertEqual(result["status"], "creation_uncertain")
+                self.assertFalse(result["roles"]["worker"].get("pane_label_confirmed"))
+                self.assertEqual(len(result["owned_panes"]), 1)
+                self.assertEqual(before, sum(c[:2] == ["agent", "start"] for c in self.fake.calls))
+
+    def test_title_disappearing_during_startup_is_not_reported_as_success(self):
+        self.fake.drop_label_on_start = True
+        with self.assertRaisesRegex(lab_module.LabError, "label"):
+            self.lab.start("startup-title-loss", "worker,qa")
+        result = self.lab.load("startup-title-loss")
+        self.assertEqual(result["status"], "creation_uncertain")
+        self.assertFalse(result["roles"]["worker"].get("pane_label_confirmed"))
+        self.assertEqual(len(result["owned_panes"]), 1)
 
     def test_duplicate_message_does_not_resubmit(self):
         self.send()

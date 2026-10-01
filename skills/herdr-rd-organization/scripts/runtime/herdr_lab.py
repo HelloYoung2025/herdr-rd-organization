@@ -17,6 +17,8 @@ import uuid
 
 
 ROLES = ("research", "orchestrator", "worker", "qa", "curator")
+ROLE_TITLES = {"research": "Research Engineer", "orchestrator": "Engineering Orchestrator",
+               "worker": "Worker", "qa": "Independent QA", "curator": "Skills Curator"}
 MAIN_ROLES = {"research", "orchestrator"}
 TERMINAL = {"completed", "failed"}
 SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]{0,95}$")
@@ -255,6 +257,15 @@ class Lab:
                 "permission_mode_default": "default", "closes_existing_panes": False,
                 "automatic_task_dispatch": False}
 
+    def verify_pane_label(self, binding, tab_id):
+        binding["pane_label_confirmed"] = False
+        pane = self.client.call(["pane", "get", binding["pane_id"]]).get("pane", {})
+        if pane.get("pane_id") != binding["pane_id"] or pane.get("tab_id") != tab_id:
+            raise LabError("Pane/tab binding changed during label verification")
+        if pane.get("label") != binding["pane_label"]:
+            raise LabError("Pane label is missing or differs from the requested role title")
+        binding["pane_label_confirmed"] = True
+
     def start(self, run_id=None, roles=None):
         selected = self.select(roles)
         run_id = safe_id(run_id or "run-" + datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S-") + uuid.uuid4().hex[:8])
@@ -292,10 +303,18 @@ class Lab:
                 name = "lab-" + run_id[-16:] + "-" + role
                 native_session_id = str(uuid.uuid4())
                 binding = {"pane_id": pane_id, "name": name, "session_ref": None,
+                           "pane_label": ROLE_TITLES[role] + " | " + run_id[-8:], "pane_label_confirmed": False,
                            "expected_native_session_id": native_session_id, "binding_confirmed": False,
                            "terminal_id": None, "temporary": settings["temporary"],
                            "created_by_run": run_id, "state": "starting", "captures": []}
                 manifest["roles"][role] = binding
+                self.event(manifest, "pane_label_submitting", role=role, pane_id=pane_id,
+                           label=binding["pane_label"])
+                self.save(manifest)
+                self.client.call(["pane", "rename", pane_id, binding["pane_label"]])
+                self.verify_pane_label(binding, manifest["tab_id"])
+                self.event(manifest, "pane_label_verified", role=role, pane_id=pane_id,
+                           label=binding["pane_label"])
                 self.save(manifest)
                 argv = ["agent", "start", name, "--kind", "grok", "--pane", pane_id, "--timeout", "30000", "--",
                         "--cwd", self.config["project_root"], "--session-id", native_session_id, "--model", settings["model"],
@@ -313,6 +332,7 @@ class Lab:
                                                     and reference.get("value") == native_session_id)
                 if not binding["binding_confirmed"]:
                     manifest["gaps"].append(f"{role}: native session ID unavailable or mismatched; dispatch blocked")
+                self.verify_pane_label(binding, manifest["tab_id"])
                 self.event(manifest, "role_created", role=role, pane_id=pane_id)
                 self.save(manifest)
                 previous = pane_id
