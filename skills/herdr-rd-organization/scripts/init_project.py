@@ -66,7 +66,7 @@ def initialize(project_root, input_dir, state_dir, session, workspace, model, ef
     if not SAFE_ID.fullmatch(run_id):
         raise ValueError("run_id must match the runtime's ASCII ID rule")
     for label, value in (("session", session), ("workspace", workspace), ("model", model), ("effort", effort)):
-        if not value.strip() or value.startswith("REPLACE_"):
+        if not isinstance(value, str) or not value.strip() or value != value.strip() or value.startswith("REPLACE_"):
             raise ValueError(f"{label} must be explicit; no default or fallback")
     if not RUNTIME.is_file() or not ASSETS.is_dir():
         raise FileNotFoundError("Installed runtime or template assets are missing")
@@ -102,7 +102,7 @@ def initialize(project_root, input_dir, state_dir, session, workspace, model, ef
     if set(payloads) != expected:
         raise ValueError("Installed JSON template names do not match the seven required resources")
     config = payloads["lab-config.json"]
-    if config.get("schema_version") != 1:
+    if type(config.get("schema_version")) is not int or config["schema_version"] != 1:
         raise ValueError("Only configuration schema_version 1 is supported")
     if not isinstance(config.get("herdr_executable"), str) or not config["herdr_executable"].strip():
         raise ValueError("herdr_executable must be an explicit nonempty command string")

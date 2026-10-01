@@ -65,6 +65,8 @@ $labConfig = "$labInputs/lab-config.json"
 
 填写 research-task.json 的实际课题, 冻结目标, 可观察验收, 允许输入, 写入范围, 预算, deadline 和交付。根据真实用户决定填写状态和依据。填写 orchestrator-task.json 的范围与授权, Research 真正完成后再填方案与回执路径。运行程序不技术强制执行业务 JSON 的文件范围或验收。
 
+Orchestrator intake 中目标, 方案和完成回执的路径必须同时填原始文件字节的 SHA256。可用 Get-FileHash -Algorithm SHA256 -LiteralPath <实际路径> 获取。接收角色使用前核对, 不匹配或缺失时停止并报告 gap。send 只冻结任务正文, 不冻结正文引用的文件; QA 也要检查准确版本。Curator 的 experience.json 另需填有限任务列表, 正整数 max_tasks, UTC 结束时间与停止条件。
+
 检查 lab-config.json 中 Herdr executable, session/workspace, 五个角色的 provider/model/effort, template_file 和 temporary。首版只支持 grok, 无跨 provider 或模型静默回退。默认使用 permission-mode default, no-subagents 和 disable-web-search。需要不同角色模型或 effort 时显式修改配置, 再核对实际启动结果。
 
 session_args 是额外的字面参数数组, 不能覆盖 model/effort/cwd/session 或其短参数。拒绝 always-approve, yolo 和 --auto。项目确有相应授权时可显式指定一个支持的 --permission-mode: default, acceptEdits, auto, dontAsk 或 plan; 名称本身不构成项目授权。实际审批需核对操作, 本 skill 没有自动选项批准引擎。
@@ -79,6 +81,8 @@ python -B "$skillRoot/scripts/runtime/herdr_lab.py" --config $labConfig status -
 ```
 
 preflight 读取配置, Herdr 版本/snapshot; plan 只输出计划, 两者不写运行 state 或操作 pane。start 创建本 run 的新角色并记录身份, 不接管原窗口, 不自动派科研任务。每个新 Grok 角色有明确 native UUID; send 用新鲜 API 核对, 缺失, 陈旧或不一致即拒绝派工。
+
+plan 和 status 不要求本机已安装 Herdr; status 只读已有 manifest, 缺失时报告错误且不创建 state。start 核对创建结果确为新 pane, 位于指定 workspace/tab 且与新鲜元数据一致, 才能命名和启动。creation_uncertain 阻止新派工, 保留证据供核查, 不盲目重跑或接管。
 
 start 为每个新 pane 设置固定角色标题, 例如 Research Engineer | 1234abcd、Engineering Orchestrator | 1234abcd、Worker | 1234abcd、Independent QA | 1234abcd 和 Skills Curator | 1234abcd。后缀是 run_id 的最后 8 个字符。Agent 的内部 name 与 pane 的显示 label 是独立字段: 程序在启动 Agent 前调用 pane rename, 并通过 pane get 核对 pane_id、tab_id 和 label; 启动后再次检查标题是否保留。命名失败或实际标题不匹配时保留本 run 的已创建窗口与记录, 返回 creation_uncertain, 不继续创建其他角色。不要盲目重跑 start。
 
@@ -105,6 +109,10 @@ python -B "$skillRoot/scripts/runtime/herdr_lab.py" --config $labConfig send --r
 ```
 
 send 在提交前保存正文、已渲染角色模板和完整 prompt 及 hash; 它们属于项目运行证据, 不随 skill 分享。
+
+消息准备和结果合并使用短状态锁, 等待 Herdr prompt 响应期间释放锁, 让角色回执和 pause 可写入。state 表示回执进度, submission_state 单独记录投递结果; 响应不会把 completed/failed 等真实回执退回 submitted。已保存的投递 intent 属于在途尝试, pause 不撤销它。并发同 ID 去重; 进程硬中断后仍需核查在途结果, 不盲目重放。
+
+wrapper 收到响应或异常后先在该消息的 message-evidence/submission.json 保存不可变结果证据, 再合并 manifest。长取证等操作占锁超过 5 秒时明确报告合并未完成和证据路径。原写入结束后, 用同一 message ID, 同一角色和未改正文重试 send, 只核对并合并原结果, 不重新提交 prompt。状态查询不会自动修复记录。没有结果证据的在途记录仍需人工核查, 不能认定已送达或自动重派。此证据由同一 wrapper 写入, 不提供共享账户下的作者认证。
 
 同 message ID 的正文不可替换。相同正文去重不证明外部副作用 exactly once。效果未知时核查原尝试, 不盲目重放。完整研发闭环仍要按当前项目的真实任务独立验收。
 

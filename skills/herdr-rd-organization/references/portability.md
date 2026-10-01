@@ -21,7 +21,9 @@
 | 自动审批与文件硬隔离 | 未提供 |
 | 崩溃恢复, 跨机器, 其他 provider, Linux/macOS | 未验收 |
 
-skill 运行程序沿用原接口与 20 项合成 fixture, 并作三项有界修订: 不按普通目录名 private 推定授权边界, 在每个角色 prompt 传播当前授权和资料边界, 保存当次完整模板/prompt 与 hash。范围仍由实际项目与用户授权决定, 不读取别的项目禁用资料。原 fixture 与 12 个模板资源保留原字节; 文档和初始化脚本按 skill 布局适配。
+skill 运行程序沿用原接口, 并按复现的故障增加身份, 并发回执, 回收与输入校验回归。每个角色 prompt 传播当前授权, 资料边界和引用 hash 核查责任, 保存当次完整模板/prompt 与 hash。范围仍由实际项目与用户授权决定, 不按普通目录名 private 推定授权边界。当前 fixture 与模板已随这些修订更新, 具体源码版本与字节 hash 以 PACKAGE_MANIFEST.json 为准。
+
+多会话, 分屏与移动 pane 的首次调用另有真实 Herdr 0.9.1 原生环境验证, 使用隔离的临时 shell 会话。并发, 错误 API 返回和对抗式权限正文使用 fake transport 与真实本地子进程验证。它们没有调用模型, 不能替代五角色自主研发闭环或角色实际服从验证。
 
 合成检查包括 capture 纯文本格式、cleanup idle/done、去重、未知提交、身份不一致和未决审批回归。初始化只生成 draft/pending 项目资料, 不运行 Herdr 或创建运行 state; 新任务引用不固定到初始 Worker 草案。真实 symlink 创建受 Windows 权限限制, 不能把跳过项称通过; 项目目录别名/逃逸可另用实际 junction 测试。执行 [本地 fixture](../scripts/fixtures/test_herdr_lab.py)不能替代真实任务验收。并发目录替换、业务 JSON 授权、候选状态与作者身份不是此运行器的技术强制检查。
 

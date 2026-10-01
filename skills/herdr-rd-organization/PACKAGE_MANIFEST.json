@@ -1,7 +1,7 @@
 {
   "name": "herdr-rd-organization",
-  "version": "1.0.3",
-  "created_utc": "2026-10-01T10:40:06.503012+00:00",
+  "version": "1.0.4",
+  "created_utc": "2026-10-01T12:56:29.423698+00:00",
   "files": [
     {
       "path": "SKILL.md",
@@ -20,13 +20,13 @@
     },
     {
       "path": "assets/templates/experience.example.json",
-      "sha256": "8b05dbb3c25ca86bd373db04974cfcbcdfe47aedf6f0cea24eca43ec4a422922",
-      "bytes": 984
+      "sha256": "bc694d8841ecfb77d519b3a4674920cf0bf7e75034bba7b9c288d51354dda136",
+      "bytes": 1327
     },
     {
       "path": "assets/templates/orchestrator-task.example.json",
-      "sha256": "1e9a2034d8cbc0edf06d97a9d5f28aab0ed4db3be488b90736931affa8a292a5",
-      "bytes": 3222
+      "sha256": "278e15f78f023dbbfbc57fa29ba59a16e927bd7efa80eaef675d346433a96664",
+      "bytes": 3844
     },
     {
       "path": "assets/templates/receipt.example.json",
@@ -75,8 +75,8 @@
     },
     {
       "path": "references/organization.md",
-      "sha256": "d79b3e17ea91d4c6cf2b72e293a260c7c30ab68a9f59cfb793d16b133ffbb274",
-      "bytes": 4491
+      "sha256": "418d14e663bc6bc43b87b007bfd3479cad922eee26c6e8fa80f14b6cd2d2aaca",
+      "bytes": 5271
     },
     {
       "path": "references/overview.md",
@@ -85,18 +85,18 @@
     },
     {
       "path": "references/portability.md",
-      "sha256": "fdf2055c3fb29dad38d388ebe41361103d70a6d5867a89804cc95b077d929a0c",
-      "bytes": 5320
+      "sha256": "3bea483addf52c9e4b4e32ded63fdf03632355c954003cb80bdb270e0eefa99c",
+      "bytes": 5685
     },
     {
       "path": "references/quickstart.md",
-      "sha256": "a42aef4a1cbf5c030da88578345e52e5439f24f56f6308d83ca6c98131d82337",
-      "bytes": 14810
+      "sha256": "9c9df548dd58a4348eab50004178df53cee4cc707ef490bdca24d5e333ea75fa",
+      "bytes": 16575
     },
     {
       "path": "scripts/check_context.py",
-      "sha256": "7f4c63e2932b2089420f5dcb41830de4af6cc22f84d0bd307d829bd643058d19",
-      "bytes": 8923
+      "sha256": "d5bbfb7bb913f7f0f7c6161fc20894ed204156bad60b4d468f9e27e4b67858b2",
+      "bytes": 8949
     },
     {
       "path": "scripts/fixtures/test_check_context.py",
@@ -105,8 +105,8 @@
     },
     {
       "path": "scripts/fixtures/test_herdr_lab.py",
-      "sha256": "c4ff096c10c719b49628823e08e905bed3320753acfcb2965db877dbbe5b71be",
-      "bytes": 17825
+      "sha256": "d849490c56bcc91cf48e62835b3dc2e20aa3fd7bbe080bffd34fba2198d1f45c",
+      "bytes": 32883
     },
     {
       "path": "scripts/fixtures/test_init_project.py",
@@ -120,13 +120,13 @@
     },
     {
       "path": "scripts/init_project.py",
-      "sha256": "07936015551fb9b6d1e62025739dbf74aada7ea932082acfe5c1312950a120d6",
-      "bytes": 12269
+      "sha256": "e073210ef9f6779370c67937c04b8c0da08f71dd3e9c162ecb94ab17a2853002",
+      "bytes": 12370
     },
     {
       "path": "scripts/runtime/herdr_lab.py",
-      "sha256": "164cb206a325c4401276c83d90a6d778c40c78b19e5e8a3a0b283cee3d753d5d",
-      "bytes": 37511
+      "sha256": "cb0b29a3c729e1f32d09d2c89681bea0c59202ec23ccbcfc689743ea0ec8fcb1",
+      "bytes": 48061
     }
   ],
   "baseline_starter_name": "herdr-project-starter-20260930.zip",
@@ -149,7 +149,14 @@
     "verify pane and tab identity plus label before and after agent startup",
     "read-only first-call context check resolves inherited socket/session before caller pane lookup",
     "pin every RPC to a verified session; refuse stale, ambiguous, or conflicting identities without retargeting",
-    "keep recorded run binding distinct from the invoking pane; do not rewrite state during recovery"
+    "keep recorded run binding distinct from the invoking pane; do not rewrite state during recovery",
+    "validate newly created pane identity before renaming or starting; reject partial-run dispatch",
+    "release writer lock during prompt RPC and merge receipt/submission state without losing pause epochs",
+    "recheck each temporary role immediately before close; reject malformed config/RPC values; local plan/status need no Herdr binary",
+    "bind referenced goal/plan/receipt hashes in intake contract; give project method trials explicit finite bounds",
+    "validate all final snapshot identity fields before each close and workspace during label checks",
+    "preserve immutable prompt outcome before lock acquisition; same-ID retry reconciles without repeating RPC",
+    "historical status skips removed role resources; reject boolean/float schema and empty snapshot identities; propagate reference checks to every role prompt"
   ],
   "runtime_state_included": false,
   "credentials_included": false,

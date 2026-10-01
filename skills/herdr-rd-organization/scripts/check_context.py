@@ -37,7 +37,7 @@ def inspect_context(session=None, workspace=None, pane=None, herdr_executable="h
         raise BindingError(code, message, context)
 
     for label, value in (("session", session), ("workspace", workspace), ("pane", pane)):
-        if value is not None and (not isinstance(value, str) or not value.strip() or value.startswith("REPLACE_")):
+        if value is not None and (not isinstance(value, str) or not value.strip() or value != value.strip() or value.startswith("REPLACE_")):
             fail("invalid_target", f"{label} must be explicit and nonempty")
     config = {"herdr_executable": herdr_executable,
               "project_root": str(Path(project_root or Path.cwd()).resolve()), "session": "default"}

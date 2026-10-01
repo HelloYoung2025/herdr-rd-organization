@@ -4,8 +4,11 @@
   "run_id": "demo-run-001",
   "assigned_role": "orchestrator",
   "goal_contract_file": "C:/Projects/demo/.herdr-lab-input/research-task.json",
+  "goal_contract_sha256": "REPLACE_WITH_SHA256_OF_APPROVED_GOAL_BYTES",
   "research_plan_file": "C:/Projects/demo/sandbox/research-plan.json",
+  "research_plan_sha256": "REPLACE_WITH_SHA256_OF_COMPLETED_PLAN_BYTES",
   "research_completed_receipt_file": "REPLACE_WITH_ACTUAL_RESEARCH_COMPLETED_RECEIPT_PATH",
+  "research_completed_receipt_sha256": "REPLACE_WITH_SHA256_OF_ACTUAL_RECEIPT_BYTES",
   "wrapper_argv_prefix": ["python", "C:/Tools/herdr-lab/runtime/herdr_lab.py", "--config", "C:/Projects/demo/.herdr-lab-config.json"],
   "execution_contract": {
     "authorization_status": "pending",
@@ -21,12 +24,13 @@
   },
   "workflow": [
     "Use the current run roles and actual RUN ROLE BINDINGS. Missing or inconsistent identity is a gap; do not guess or take over older panes.",
-    "Check the frozen goal, authorized scope and Research plan. Create a Worker body-file containing the exact method version, project rules, approved inputs, allowed writes, rollback, deliverables and receipt contract.",
+    "Verify each referenced goal, plan and completed receipt against its saved SHA256 before use. Missing or changed references are a gap: do not dispatch against them or silently accept a new hash. The wrapper freezes the message body, not referenced files.",
+    "Check the frozen goal, authorized scope and Research plan. Create a Worker body-file containing the exact method version, frozen acceptance or approved file paths with SHA256, project rules, approved inputs, allowed writes, rollback, deliverables and receipt contract.",
     "Dispatch Worker with wrapper send, a fresh message ID and that body-file. Wait for the role's real terminal receipt and artifacts; submission success is insufficient.",
     "Create a QA body-file with the frozen acceptance, exact artifact version, approved evidence and no hidden answers or private memory. Dispatch QA independently with wrapper send.",
     "For a defect, preserve QA evidence, route a bounded Worker repair and a separate QA retest. Do not edit either role's findings.",
     "Send a Research feedback body-file containing real Worker/QA evidence, failures, costs and unknowns. Research may revise method within the frozen contract.",
-    "After an actual cycle, send Curator only an approved evidence pack for a project method candidate. Check sources and independent validation before any limited trial; preserve counterexamples and rollback.",
+    "After an actual cycle, send Curator only an approved evidence pack for a project method candidate. Check sources and independent validation before any limited trial; bind its version, finite task IDs, deadline and stop conditions before use; preserve counterexamples and rollback.",
     "Write an evidence-based summary. Complete your own receipt only when the assigned cycle has a real outcome; report failed or pending work truthfully."
   ],
   "summary_file": "C:/Projects/demo/sandbox/orchestrator-summary.json",

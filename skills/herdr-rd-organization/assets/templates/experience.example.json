@@ -15,6 +15,12 @@
   "independent_validation_ref": null,
   "trial_authorization_ref": null,
   "trial_task_ids": [],
+  "trial_bounds": {
+    "max_tasks": 0,
+    "deadline_utc": "REPLACE_WITH_TRIAL_END_UTC",
+    "end_condition": "Stop when the listed tasks, max_tasks or deadline ends; record outcomes before any extension.",
+    "stop_conditions": ["authorization_or_scope_mismatch", "harmful_result", "REPLACE_WITH_OBSERVABLE_PROJECT_FAILURE_THRESHOLD"]
+  },
   "effect_metrics": {
     "quality": null,
     "repeated_defects": null,

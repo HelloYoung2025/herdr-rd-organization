@@ -1,8 +1,8 @@
 # Herdr R&D Organization
 
-版本 v1.0.3。一个可复用的 Herdr 研发组织 Skill, 包含 Research、Orchestrator、Worker、独立 QA 与 Curator 的分工、通信、纠错和经验沉淀流程。
+版本 v1.0.4。一个可复用的 Herdr 研发组织 Skill, 包含 Research、Orchestrator、Worker、独立 QA 与 Curator 的分工、通信、纠错和经验沉淀流程。
 
-本版补充首次调用的只读 session/workspace/pane 绑定检查。先验证继承的 socket 实际属于哪个 session, 再解析调用者 pane 的当前身份。失效或冲突时报告可核对信息, 不切换 focused 窗口或创建替代 pane。已有 run 保留原配置。启动顺序与恢复步骤见 quickstart。v1.0.2 的可见 pane 标题修复继续保留。
+本版修补对抗式试用发现的创建身份、批量回收、并发回执与历史状态查询缺口。新 pane 的 workspace/tab/身份核验失败时停止，回收前核对最后观察到的完整身份。等待投递响应时释放状态锁；原始响应先留证，锁竞争后用同一消息补齐状态而不重复派工。任务引用绑定文件 hash，项目方法试用有明确终点。首次调用绑定与可见 pane 标题继续保留，具体步骤见 quickstart。
 
 ## 使用
 
@@ -21,11 +21,13 @@
 - [Skill 入口](skills/herdr-rd-organization/SKILL.md): 关键边界与按需文档入口。
 - `scripts`: 初始化、运行身份、消息、回执、取证与临时角色收尾。
 - `assets/templates`: 待填写角色和任务模板。
-- [原样分享 ZIP](downloads/herdr-rd-organization-skill-20261001-v1.0.3.zip): SHA256 `998bfaa8aa9fcc810bc01b6af6b09bbe25af17a7bddcc65aaca4d1ddee45c514`。
+- [原样分享 ZIP](downloads/herdr-rd-organization-skill-20261001-v1.0.4.zip): SHA256 `50c2eccdac584c26efe9458ad5a3c94307a16ccc664e238e3cb752b06d8bccd4`。
 - [资源清单](skills/herdr-rd-organization/PACKAGE_MANIFEST.json): 25 个源文件的 SHA256。
 - [上一版 v1.0.1](downloads/herdr-rd-organization-skill-20260930-v1.0.1.zip)保留以供撤回。
 
-本版冷副本的 58 项测试全部通过, 零跳过, Skill 格式验证通过。其中新增 17 项绑定回归涵盖多会话重复 ID、socket/session 不一致、失效 pane、移动别名、显式配置冲突和外部宿主。真实 Herdr 0.9.1 的 5 项只读检查验证了指定存活 pane、失效 workspace/pane 的拒绝、显式目标覆盖陈旧 socket, 以及外部宿主无目标时拒绝自动选择。没有创建或关闭 pane, 没有启动 Agent 或发送任务。真实受管 pane 内的首次调用与完整科研闭环仍需独立验收。
+本版由六组智能体分三轮模拟不同使用者与故障条件，并交叉复测。最终候选的 79 项回归全部通过、零跳过，Skill 格式验证通过。测试区分错误 API 返回、真实本地 CLI 子进程与真实 Herdr：在隔离 shell 会话中的四种原生入口场景通过，包括跨会话相同 ID、分屏和移动 pane；测试会话已清理。并发回执、慢速取证锁竞争与响应调和使用 fake transport 和真实本地子进程验证，没有新模型调用。
+
+引用 hash 和有限试用边界是角色核查规则，运行器不强制业务授权或文件隔离。进程硬中断、嵌套模型会话身份、自动审批、五角色自主科研闭环及跨机器仍需要相应真实验证。不能据此宣称无人值守生产验收完成。
 
 v1.0.2 已另行验证两个临时 shell pane 的 Worker/Independent QA 标题与身份, 随后关闭; 未启动 Agent。五角色命名和启动后标题丢失由 fixtures 覆盖。
 
