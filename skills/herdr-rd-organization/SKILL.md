@@ -11,7 +11,7 @@ Use this skill to turn an authorized project task into a bounded research, execu
 
 - For a new project or installation, read [quickstart](references/quickstart.md). It covers dependencies, discovery, local configuration, and the first Research dispatch. The skill directory alone is sufficient; the older starter ZIP is not required.
 - For role allocation, scientific feedback, defect routing, or Curator trials, read [organization](references/organization.md), then only the needed role/task templates in `assets/templates`.
-- For an existing run, use its recorded config and run ID. Query `status` before deciding whether to dispatch, pause, capture, or clean up. Do not initialize a replacement state or adopt older panes.
+- For an existing run, use its recorded config and run ID. Verify the target with `scripts/check_context.py --config <absolute-config-path>`, then query `status` before control. `status` reads the saved manifest; it does not locate the caller. Do not initialize replacement state or adopt older panes.
 - For compatibility, sharing, or a claim about automation, read [portability](references/portability.md). [Overview](references/overview.md) maps the bundled resources.
 
 ## Establish the project contract
@@ -22,7 +22,9 @@ Resolve this installed skill's directory from the actual loaded `SKILL.md` path,
 
 Take goals, acceptance conditions, allowed inputs, write scope, budget, and rollback from the user's actual instructions. Ask only for missing decisions that matter. Preparation and read-only preflight can continue while they are pending; draft goal contracts and pending authorization cannot become approved merely because this skill was invoked. Existing session-specific authorization remains usable within its scope. Research may adjust methods; only the user changes goals, acceptance, or authorization scope.
 
-Use the installed Herdr CLI's `herdr --skill` for CLI operations and require explicit local session/workspace, provider, model, and effort. Its built-in guide assumes a Herdr-managed caller. Outside Herdr, local initialization and `plan` remain available; do not inspect or control a focused session. Control a specifically named session from an external host only when the user has explicitly authorized that target and scope; otherwise perform the control steps inside Herdr. Do not fake `HERDR_ENV`. This skill does not install dependencies, copy credentials, supply default account access, or infer pane identity from a title.
+Before the first workspace/pane query or initialization, run `scripts/check_context.py` from the actual Herdr caller using this skill's absolute path. It checks inherited socket/session binding and verifies the caller pane, returning canonical session/workspace IDs. Do not treat launch-time `HERDR_WORKSPACE_ID` or `HERDR_PANE_ID` as current identity, reuse IDs from another session, or fall back to the focused pane. A failed check is a binding problem, not permission to create replacement panes. Recovery and external-host options are in [quickstart](references/quickstart.md).
+
+Use the installed Herdr CLI's `herdr --skill` for CLI operations and require verified session/workspace, provider, model, and effort. Pin every subsequent Herdr RPC with `--session <verified-session>`. Its built-in guide assumes a Herdr-managed caller. Outside Herdr, local initialization and `plan` remain available; do not inspect or control a focused session. Query/control a specifically named session from an external host only within the user's authorized target and scope; otherwise perform the steps inside Herdr. Do not fake `HERDR_ENV`. This skill does not install dependencies, copy credentials, supply default account access, or infer pane identity from a title.
 
 ## Run the bounded cycle
 

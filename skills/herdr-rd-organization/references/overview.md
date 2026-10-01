@@ -6,7 +6,8 @@
 
 ## 按任务读取
 
-- 初次使用或换项目: 读 [quickstart.md](quickstart.md), 用 [init_project.py](../scripts/init_project.py)生成项目内配置与资料副本。
+- 初次使用或换项目: 读 [quickstart.md](quickstart.md), 先用 [check_context.py](../scripts/check_context.py)只读核对 session/workspace/caller pane, 再用 [init_project.py](../scripts/init_project.py)生成项目内配置与资料副本。
+- 继承的 workspace/pane 找不到或已有 run 的绑定检查: 按 quickstart 的调用位置与恢复步骤处理; [test_check_context.py](../scripts/fixtures/test_check_context.py)覆盖多会话、失效环境和 pane 身份冲突。
 - 拆分职责, 纠错, 方法试用或暂停: 读 [organization.md](organization.md)。
 - 判断已验证能力, 嵌套会话问题或分享范围: 读 [portability.md](portability.md)。
 - 运行接口: [herdr_lab.py](../scripts/runtime/herdr_lab.py)。本地合成检查: [test_herdr_lab.py](../scripts/fixtures/test_herdr_lab.py)。 归档回归: [test_message_archive.py](../scripts/fixtures/test_message_archive.py), 使用 --test-root 指向skill 安装目录之外的测试目录。

@@ -20,6 +20,33 @@ herdr --skill 的内置指南假定调用者处在 Herdr pane 内, 要求 HERDR_
 
 ## 生成本地资料
 
+### 先核对调用位置
+
+首次在真实 Herdr pane 内调用时, 先运行只读检查, 不直接拿继承的 w2 或 w2:p8 查默认 session:
+
+```powershell
+$skillRoot = 'C:/Skills/herdr-rd-organization' # 换成实际加载的 Skill 路径
+python -B "$skillRoot/scripts/check_context.py"
+```
+
+成功后用 result.binding 的 session 与 workspace_id 初始化, 所有后续 Herdr RPC 显式带 --session。检查只读取 session 清单、目标 workspace 清单和指定 pane 的元数据, 不读取终端正文、创建角色或改运行记录。同一个 w1:p1 可以出现在不同 session, 不能用 ID 或标题反推 session。
+
+Herdr 0.9.1 未显式指定 --session 时, HERDR_SOCKET_PATH 可优先于 HERDR_SESSION; 检查按 socket 与本机 session 清单匹配, 不猜 default。继承的 pane/workspace 是启动时环境; pane 移动后原 ID 可由同一个服务器的原生别名解析, 以 pane get 返回的当前身份为准。[官方 CLI 说明](https://herdr.dev/docs/cli-reference/)与 [0.9.1 session 实现](https://github.com/herdrdev/herdr/blob/v0.9.1/src/session.rs)说明此路由与环境行为。
+
+若 socket 无对应 session, pane 已不存在, 或身份冲突, 检查返回失败与可核对的清单。不要因失败重建 pane、改环境变量或切到 focused 窗口。返回当前仍存活的 Herdr pane 重新调用; 或确认任务实际指向的 session/workspace 后显式检查:
+
+```powershell
+python -B "$skillRoot/scripts/check_context.py" --session 'REPLACE_WITH_VERIFIED_SESSION' --workspace 'REPLACE_WITH_VERIFIED_WORKSPACE'
+```
+
+显式 workspace 只验证指定目标, 不声称它是调用者, 不继承其他 session 的 pane ID。外部宿主只能在用户已授权的目标与范围内用此方式检查, 不伪造 HERDR_ENV。已有 run 使用下面命令核对原配置; 不因调用者位置变化重写 config、manifest 或接管新窗口:
+
+```powershell
+python -B "$skillRoot/scripts/check_context.py" --config $labConfig
+```
+
+### 填写并初始化
+
 init_project.py 只生成配置与模板副本, 不启动 Herdr, 不创建 pane/manifest, 不把草稿授权提升为已批准。先把下面 session, workspace 和 model 的 REPLACE 值改成实际值再运行; 初始化拒绝这些占位值。
 
 ```powershell

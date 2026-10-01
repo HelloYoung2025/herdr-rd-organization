@@ -1,8 +1,13 @@
 {
   "name": "herdr-rd-organization",
-  "version": "1.0.2",
-  "created_utc": "2026-10-01T03:14:54.704641+00:00",
+  "version": "1.0.3",
+  "created_utc": "2026-10-01T10:40:06.503012+00:00",
   "files": [
+    {
+      "path": "SKILL.md",
+      "sha256": "cf9e654d97242da7bd48e7b68c66fe5f44ff03a01797917a59b682d4fbdd08d2",
+      "bytes": 8044
+    },
     {
       "path": "agents/openai.yaml",
       "sha256": "707628341b1d6b039bc39569e54e14b54cd93501abd27ec77c047d39a029a9e6",
@@ -75,8 +80,8 @@
     },
     {
       "path": "references/overview.md",
-      "sha256": "c2d8aa6adb72b4f08d9d4246978c6de49ab6975230a5b3ff008626e21df2ff0d",
-      "bytes": 3276
+      "sha256": "6a2c69cd98cf94642b0ecaf82192d926386e8f33c0569aa09d9b5b1c27fcd1e0",
+      "bytes": 3618
     },
     {
       "path": "references/portability.md",
@@ -85,8 +90,18 @@
     },
     {
       "path": "references/quickstart.md",
-      "sha256": "d2508689e70b18cbba0e6a918a482848438cea9f836598846ea33dc57c77fba6",
-      "bytes": 12794
+      "sha256": "a42aef4a1cbf5c030da88578345e52e5439f24f56f6308d83ca6c98131d82337",
+      "bytes": 14810
+    },
+    {
+      "path": "scripts/check_context.py",
+      "sha256": "7f4c63e2932b2089420f5dcb41830de4af6cc22f84d0bd307d829bd643058d19",
+      "bytes": 8923
+    },
+    {
+      "path": "scripts/fixtures/test_check_context.py",
+      "sha256": "f8b574719f27375ce9dcfaf1cd93e9dca62c40e02c73a414f195e5b2e4fb5fd7",
+      "bytes": 8399
     },
     {
       "path": "scripts/fixtures/test_herdr_lab.py",
@@ -112,11 +127,6 @@
       "path": "scripts/runtime/herdr_lab.py",
       "sha256": "164cb206a325c4401276c83d90a6d778c40c78b19e5e8a3a0b283cee3d753d5d",
       "bytes": 37511
-    },
-    {
-      "path": "SKILL.md",
-      "sha256": "ee49812f8f3cbff9fb5bd91d820d30ca9b5ddef651eae6708f24bcc32e2f9ea0",
-      "bytes": 7315
     }
   ],
   "baseline_starter_name": "herdr-project-starter-20260930.zip",
@@ -136,7 +146,10 @@
     "archive rendered role/prompt with hashes in per-message directories",
     "reject filesystem-equivalent message IDs",
     "set visible role pane labels separately from internal agent names",
-    "verify pane and tab identity plus label before and after agent startup"
+    "verify pane and tab identity plus label before and after agent startup",
+    "read-only first-call context check resolves inherited socket/session before caller pane lookup",
+    "pin every RPC to a verified session; refuse stale, ambiguous, or conflicting identities without retargeting",
+    "keep recorded run binding distinct from the invoking pane; do not rewrite state during recovery"
   ],
   "runtime_state_included": false,
   "credentials_included": false,
